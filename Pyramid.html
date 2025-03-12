@@ -1,26 +1,110 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embed Example</title>
+<html lang="en">
+  <head>
+    <title>CL Tracker</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="https://explore.pyramidanalytics.com/no-shell/pyramid-embed-js.min.js"></script>
-</head>
-<body>
-  <div id="embed-container" style="width:100%; height:100%;"></div>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"
+      rel="stylesheet"/>
+    <link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-  <script>
-    const embedClient = new PyramidEmbedClient('https://explore.pyramidanalytics.com');
+  <body>
+    <script>
+        const embedClient = new PyramidEmbedClient('https://explore.pyramidanalytics.com');
+      
+        embedClient.login('cl_basic', 'demo123!').then(token => {
+          embedClient.init();
+      
+          const container = document.getElementById('embed-container');
+      
+          embedClient.embed(container, {
+            contentId: '0f6b5dd4-cda6-4f97-a32b-b691b1dfbeae',
+          });
+        });
+      </script>
+    <body>
+      <style>
 
-    embedClient.login('cl_basic', 'demo123!').then(token => {
-      embedClient.init();
+.navbar {
+  overflow: hidden;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  padding-left:80px;
+  width: 100%;
+  height: 75px;
+}
 
-      const container = document.getElementById('embed-container');
+.navbar a {
+  float: right;
+  display: block;
+  color: blue ;
+  font-weight: bold;
+  text-align: center;
+  /* padding: 14px 16px; */
+  text-decoration: none;
+  font-size: 17px;
 
-      embedClient.embed(container, {
-        contentId: '0f6b5dd4-cda6-4f97-a32b-b691b1dfbeae',
-      });
-    });
-  </script>
-</body>
+}
+
+.navbar a:hover {
+  background: rgba(1, 117, 63, 0.356);
+  color: #0668f0;
+  border-radius:10px ;
+}
+
+
+  </style>
+ <style>
+  menu:hover {
+ background-color: white;
+ border-color: #007bff;
+ cursor: pointer;
+ font-size: 18px; 
+  transition: font-size 0.3s ease;
+ border-radius: 10px;
+   }
+
+
+   .embed-container {
+    position: relative;
+    width: 100vw;  /* Full viewport width */
+    height: calc(100vh - 100px); /* Full viewport height minus navbar height */
+    margin-top: 100px; /* Prevents content from sitting behind the navbar */
+    overflow: hidden; /* Ensures no scrollbars inside the embed */
+}
+    
+</style>
+       
+  <div class="navbar" >
+    
+     <img src="img/Pyramid-Logo-RGB-OG-1.svg" alt="pyramid" style="border-radius:3px; position: relative; height: 70px;">
+     <a href="https://www.pyramidanalytics.com/decision-intelligence-platform/embedded-analytics/" style="position:relative; right: 140px;"">Embedded Analytics with Pyramid</a>
+    
+  
+  
+    <a href="#news"> </a>
+  
+  
+  </div>
+  
+
+<div id="embed-container" class="embed-container"></div>
+
+
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>
