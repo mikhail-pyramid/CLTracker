@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed Example</title>
+    <script src="https://explore.pyramidanalytics.com/no-shell/pyramid-embed-js.min.js"></script>
+</head>
+<body>
+  <div id="embed-container" style="width:1280px; height:720px;"></div>
+
+  <script>
+    const embedClient = new PyramidEmbedClient('https://explore.pyramidanalytics.com');
+
+    embedClient.setAuthToken('6Pp9Zf6O8y56DXwvPRfVDRsYdChdjWHx8H2odjn/XFxFKxmSF7N956n0cxi8UQO0o1BSsCwNZedgNU6mVON3tL5YHeNOApaFj2yXr7RccUKuYhoiPrg09heJRxlIHVBPhd/YMSocHsN/bZa8zuP4GX5ewyi2LNEFRLI6ObitH6Dxi+R3yJ8Kh/hyPb8rKpfPrtTkE1maUiyKxI44QNLj04TQ3SEi8/SrURuOlnIdyFFwgjvtUZfzdS/Eulvbte3M+AWKJJ2BzF1uK82yBci2Jsp+lDtRyTjhWhbgB5JhEe1A4YmamDq39GCQQYSGpZeNI0AxitPbFwLePKabxsqb2E1+ZTHuc7YNS5fjKQ1T0JeMjPz3tkaTiHfckbztI4ivlgtXAjb1Si11iMos+EwMBOsExuX9MlBN6MyUYoJcannybodK1xuxeQDuw10CkAwbmGni0wFLOWPe6zO7qV0yHmnxILPODK5QZ+wlx/6jDsq6XNZvXV4B5/pWPSJTLiIBsBbZEi9egR+lHUiT32NFBF1ARR7nzjYJ4m6HkdGfULENRfhmjL9wBq4jzpkwRQXPxUie3Cm0WCB7fKa2/d1Xj4IatFwZvbx1VUyye97cotLL1IACUPJrVRYRbQF0+xta');
+    embedClient.init();
+
+    const container = document.getElementById('embed-container');
+
+    embedClient.embed(container, {
+      contentId: '0f6b5dd4-cda6-4f97-a32b-b691b1dfbeae',
+    });
+  </script>
+</body>
+</html>
