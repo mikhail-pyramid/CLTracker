@@ -1,0 +1,88 @@
+import requests
+import pandas as pd
+
+# Set the API endpoint and your API key
+api_url = "https://api.football-data.org/v4/competitions/CL/teams"
+headers = {
+    'X-Auth-Token': 'ffdb50ddb9eb4bf396f1814b88f7c0f7'  # Replace with your API key
+}
+
+# Fetch the match data
+response = requests.get(api_url, headers=headers)
+
+if response.status_code == 200:
+    # Parse the JSON response
+    teams = response.json()
+teams_df = pd.DataFrame(teams['teams'])
+squad_df = pd.json_normalize(teams_df['squad'])
+# Create a DataFrame with columns from the 'value' column
+squad_df_long = pd.melt(squad_df, var_name='column_name', value_name='value')
+squad_df_with_columns = pd.json_normalize(squad_df_long['value'].tolist())
+
+squad_df_with_columns['id'] = pd.to_numeric(squad_df_with_columns['id'], errors='coerce').astype('Int64')
+
+squad_df=squad_df_with_columns
+squad_df.dropna(inplace=True)
+
+# Create a mapping table from the 'squad' column
+mapping_table = teams_df[['id', 'squad']].explode('squad')
+mapping_table['player_id'] = mapping_table['squad'].apply(lambda x: x.get('id') if isinstance(x, dict) else None)
+# Print the mapping table
+mapping_table.drop(columns=['squad'], inplace=True)
+mapping_table.rename(columns={'id': 'team_id'}, inplace=True)
+
+
+squad_df = pd.merge(squad_df, mapping_table, left_on='id', right_on='player_id', how='left')
+squad_df.drop(columns=['id'], inplace=True)
+
+
+api_url = "https://api.football-data.org/v4/competitions/CL/matches"
+headers = {
+    'X-Auth-Token': 'ffdb50ddb9eb4bf396f1814b88f7c0f7'  # Replace with your API key
+}
+
+# Fetch the match data
+response = requests.get(api_url, headers=headers)
+
+if response.status_code == 200:
+    # Parse the JSON response
+    matches = response.json()
+matches_df = pd.json_normalize(matches['matches'])
+
+api_url = "https://api.football-data.org/v4/competitions/CL/standings"
+headers = {
+    'X-Auth-Token': 'ffdb50ddb9eb4bf396f1814b88f7c0f7'  # Replace with your API key
+}
+
+# Fetch the match data
+response = requests.get(api_url, headers=headers)
+
+if response.status_code == 200:
+    # Parse the JSON response
+    standings = response.json()
+standings_df = pd.json_normalize(standings['standings'][0]['table'])
+
+api_url = "https://api.football-data.org/v4/competitions/CL/scorers"
+headers = {
+    'X-Auth-Token': 'ffdb50ddb9eb4bf396f1814b88f7c0f7'  # Replace with your API key
+}
+
+# Fetch the match data
+response = requests.get(api_url, headers=headers)
+
+if response.status_code == 200:
+    # Parse the JSON response
+    scorers = response.json()
+
+scorers_df = pd.json_normalize(scorers['scorers'])
+# scorers_df_flattened = pd.json_normalize(scorers_df['team'].explode())
+# scorers_df_flattened = pd.concat([scorers_df, scorers_df_flattened], axis=1)
+scorers_df
+
+from google.colab import files
+
+# Assuming 'matches_df' is your DataFrame
+teams_df.to_excel('teams_df.xlsx', index=False)
+
+# Download the Excel file
+files.download('teams_df.xlsx')
